@@ -25,3 +25,7 @@ password=naufalnibros
 
 ### Entry VCD
 <img src="https://github.com/naufalnibros/submissiion-pbo-2019/blob/master/entry-vcd.png?raw=true" title="Directory Project" alt="Directory Project">
+
+
+### Note
+Silahkan dipelajari sebagai bahan tugas akhir mata kuliah OOP atau hanya sekedar ingin belajar Basic OOP
