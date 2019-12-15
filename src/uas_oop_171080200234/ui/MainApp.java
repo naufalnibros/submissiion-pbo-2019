@@ -5,24 +5,113 @@
  */
 package uas_oop_171080200234.ui;
 
+import java.util.List;
+import javax.swing.JOptionPane;
+import uas_oop_171080200234.database_service.DatabaseConst;
+import uas_oop_171080200234.database_service.DatabaseFactory;
+import uas_oop_171080200234.database_service.DatabaseInterface;
+import uas_oop_171080200234.database_service.models.JenisFilm;
+import uas_oop_171080200234.database_service.models.VCD;
+import uas_oop_171080200234.database_service.repositories.RepositoryInterface;
+import uas_oop_171080200234.ui.components.dialog_form.JenisFilmDialogForm;
+import uas_oop_171080200234.ui.components.dialog_form.VCDDialogForm;
+import uas_oop_171080200234.ui.components.table_model.JenisFilmTableModel;
+import uas_oop_171080200234.ui.components.table_model.VCDTableModel;
+
 /**
  *
  * @author naufalnibros
  */
-public class MainApp extends javax.swing.JFrame {
+public class MainApp extends javax.swing.JFrame implements OnCallBackComponent {
     
-    private OnListener onListener;
+    private static RepositoryInterface repositoryJenisFilm, repositoryVCD;
 
     /**
      * Creates new form MainApp
      */
     public MainApp() {
-        initComponents();
+        initComponents();       
+        
+        setTitle("TUGAS AKHIR UAS MOCH NAUFAL NIBROS - 171080200234");
+        
+        setRepositoryModel();
+        
+        getDataTable();
     }
+    
+    private void getDataTable(){
+        repositoryJenisFilm.findAll();
+        repositoryVCD.findAll();
+    }
+    
+    private void setTableJenisFilm(List<JenisFilm> list){
+        JenisFilmTableModel tableModel = new JenisFilmTableModel(list);
+        tableJenisFilm.setModel(tableModel);
+    }
+    
+    private void setTableVCD(List<VCD> list){
+        VCDTableModel tableModel = new VCDTableModel(list);
+        tableVcd.setModel(tableModel);
+    }
+    
+    private void setRepositoryModel(){
+        repositoryJenisFilm = DatabaseFactory
+                .from(DatabaseConst.TABLE_JENIS_FILM)
+                .setListener(onDatabaseListenerJenisFilm);
+        
+        repositoryVCD = DatabaseFactory
+                .from(DatabaseConst.TABLE_VCD)
+                .setListener(onDatabaseListenerVCD);
+    }
+    
+    /**
+     * Response Callback Repository Pattern Data 
+     */
+    private final DatabaseInterface<JenisFilm> onDatabaseListenerJenisFilm = new DatabaseInterface<JenisFilm>() {
+        
+        @Override
+        public void onResult(List<JenisFilm> list) {
+            setTableJenisFilm(list);
+        }
 
-    public void setOnListener(OnListener onListener) {
-        this.onListener = onListener;
-    }
+        @Override
+        public void onSuccess() {
+            
+        }
+
+        @Override
+        public void onError(String message) {
+            JOptionPane.showMessageDialog(null, message, "Terjadi Kesalahan Jenis Film Listener", JOptionPane.PLAIN_MESSAGE);
+        }
+
+        @Override
+        public void onProcess() {
+     
+        }
+    };
+    
+    private final DatabaseInterface<VCD> onDatabaseListenerVCD = new DatabaseInterface<VCD>() {
+        
+        @Override
+        public void onResult(List<VCD> list) {
+            setTableVCD(list);
+        }
+
+        @Override
+        public void onSuccess() {
+        }
+
+        @Override
+        public void onError(String message) {
+            JOptionPane.showMessageDialog(null, message, "Terjadi Kesalahan VCD Listener", JOptionPane.PLAIN_MESSAGE);
+        }
+
+        @Override
+        public void onProcess() {
+     
+        }
+    };
+    
 
     /**
      * This method is called from within the constructor to initialize the form.
@@ -33,41 +122,157 @@ public class MainApp extends javax.swing.JFrame {
     // <editor-fold defaultstate="collapsed" desc="Generated Code">//GEN-BEGIN:initComponents
     private void initComponents() {
 
-        buttonOKe1 = new uas_oop_171080200234.ui.components.ButtonOKe();
+        jDialog1 = new javax.swing.JDialog();
+        jDialog2 = new javax.swing.JDialog();
+        jDialog3 = new javax.swing.JDialog();
+        jMenuItem1 = new javax.swing.JMenuItem();
+        jMenu1 = new javax.swing.JMenu();
+        btnAddJenisFilm = new javax.swing.JButton();
+        btnAddVCD = new javax.swing.JButton();
+        jScrollPane1 = new javax.swing.JScrollPane();
+        tableJenisFilm = new javax.swing.JTable();
+        jScrollPane2 = new javax.swing.JScrollPane();
+        tableVcd = new javax.swing.JTable();
+
+        javax.swing.GroupLayout jDialog1Layout = new javax.swing.GroupLayout(jDialog1.getContentPane());
+        jDialog1.getContentPane().setLayout(jDialog1Layout);
+        jDialog1Layout.setHorizontalGroup(
+            jDialog1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+            .addGap(0, 400, Short.MAX_VALUE)
+        );
+        jDialog1Layout.setVerticalGroup(
+            jDialog1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+            .addGap(0, 300, Short.MAX_VALUE)
+        );
+
+        javax.swing.GroupLayout jDialog2Layout = new javax.swing.GroupLayout(jDialog2.getContentPane());
+        jDialog2.getContentPane().setLayout(jDialog2Layout);
+        jDialog2Layout.setHorizontalGroup(
+            jDialog2Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+            .addGap(0, 400, Short.MAX_VALUE)
+        );
+        jDialog2Layout.setVerticalGroup(
+            jDialog2Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+            .addGap(0, 300, Short.MAX_VALUE)
+        );
+
+        javax.swing.GroupLayout jDialog3Layout = new javax.swing.GroupLayout(jDialog3.getContentPane());
+        jDialog3.getContentPane().setLayout(jDialog3Layout);
+        jDialog3Layout.setHorizontalGroup(
+            jDialog3Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+            .addGap(0, 400, Short.MAX_VALUE)
+        );
+        jDialog3Layout.setVerticalGroup(
+            jDialog3Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+            .addGap(0, 300, Short.MAX_VALUE)
+        );
+
+        jMenuItem1.setText("jMenuItem1");
+
+        jMenu1.setText("jMenu1");
 
         setDefaultCloseOperation(javax.swing.WindowConstants.EXIT_ON_CLOSE);
 
-        buttonOKe1.addActionListener(new java.awt.event.ActionListener() {
+        btnAddJenisFilm.setText("ADD JENIS FILM");
+        btnAddJenisFilm.addActionListener(new java.awt.event.ActionListener() {
             public void actionPerformed(java.awt.event.ActionEvent evt) {
-                buttonOKe1ActionPerformed(evt);
+                btnAddJenisFilmActionPerformed(evt);
             }
         });
+
+        btnAddVCD.setText("ADD VCD");
+        btnAddVCD.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                btnAddVCDActionPerformed(evt);
+            }
+        });
+
+        tableJenisFilm.setBorder(javax.swing.BorderFactory.createBevelBorder(javax.swing.border.BevelBorder.RAISED));
+        tableJenisFilm.setModel(new javax.swing.table.DefaultTableModel(
+            new Object [][] {
+
+            },
+            new String [] {
+                "KODE", "KETERANGAN"
+            }
+        ) {
+            Class[] types = new Class [] {
+                java.lang.String.class, java.lang.String.class
+            };
+            boolean[] canEdit = new boolean [] {
+                false, false
+            };
+
+            public Class getColumnClass(int columnIndex) {
+                return types [columnIndex];
+            }
+
+            public boolean isCellEditable(int rowIndex, int columnIndex) {
+                return canEdit [columnIndex];
+            }
+        });
+        jScrollPane1.setViewportView(tableJenisFilm);
+
+        tableVcd.setBorder(javax.swing.BorderFactory.createBevelBorder(javax.swing.border.BevelBorder.RAISED));
+        tableVcd.setModel(new javax.swing.table.DefaultTableModel(
+            new Object [][] {
+
+            },
+            new String [] {
+                "KODE", "NAMA", "JENIS FILM", "HARGA SEWA", "NILAI DENDA"
+            }
+        ) {
+            boolean[] canEdit = new boolean [] {
+                false, false, false, false, false
+            };
+
+            public boolean isCellEditable(int rowIndex, int columnIndex) {
+                return canEdit [columnIndex];
+            }
+        });
+        jScrollPane2.setViewportView(tableVcd);
 
         javax.swing.GroupLayout layout = new javax.swing.GroupLayout(getContentPane());
         getContentPane().setLayout(layout);
         layout.setHorizontalGroup(
             layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
             .addGroup(layout.createSequentialGroup()
-                .addGap(83, 83, 83)
-                .addComponent(buttonOKe1, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
-                .addContainerGap(256, Short.MAX_VALUE))
+                .addContainerGap()
+                .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+                    .addComponent(btnAddJenisFilm)
+                    .addComponent(btnAddVCD)
+                    .addComponent(jScrollPane1, javax.swing.GroupLayout.PREFERRED_SIZE, 414, javax.swing.GroupLayout.PREFERRED_SIZE)
+                    .addComponent(jScrollPane2, javax.swing.GroupLayout.PREFERRED_SIZE, 745, javax.swing.GroupLayout.PREFERRED_SIZE))
+                .addContainerGap(javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
         );
         layout.setVerticalGroup(
             layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
             .addGroup(layout.createSequentialGroup()
-                .addGap(41, 41, 41)
-                .addComponent(buttonOKe1, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
-                .addContainerGap(234, Short.MAX_VALUE))
+                .addContainerGap()
+                .addComponent(btnAddJenisFilm)
+                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
+                .addComponent(jScrollPane1, javax.swing.GroupLayout.PREFERRED_SIZE, 140, javax.swing.GroupLayout.PREFERRED_SIZE)
+                .addGap(18, 18, 18)
+                .addComponent(btnAddVCD)
+                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
+                .addComponent(jScrollPane2, javax.swing.GroupLayout.PREFERRED_SIZE, 197, javax.swing.GroupLayout.PREFERRED_SIZE)
+                .addContainerGap())
         );
 
         pack();
     }// </editor-fold>//GEN-END:initComponents
 
-    private void buttonOKe1ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_buttonOKe1ActionPerformed
-        if (onListener != null) {
-            onListener.onResult();
-        }
-    }//GEN-LAST:event_buttonOKe1ActionPerformed
+    private void btnAddJenisFilmActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnAddJenisFilmActionPerformed
+        JenisFilmDialogForm dialog = new JenisFilmDialogForm();
+        dialog.setCallBack(this);
+        dialog.setVisible(true);
+    }//GEN-LAST:event_btnAddJenisFilmActionPerformed
+
+    private void btnAddVCDActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnAddVCDActionPerformed
+        VCDDialogForm dialog = new VCDDialogForm();
+        dialog.setCallBack(this);
+        dialog.setVisible(true);
+    }//GEN-LAST:event_btnAddVCDActionPerformed
 
     /**
      * @param args the command line arguments
@@ -101,12 +306,33 @@ public class MainApp extends javax.swing.JFrame {
             new MainApp().setVisible(true);
         });
     }
-
-    public interface OnListener{
-        void onResult();
-    }
     
     // Variables declaration - do not modify//GEN-BEGIN:variables
-    private uas_oop_171080200234.ui.components.ButtonOKe buttonOKe1;
+    private javax.swing.JButton btnAddJenisFilm;
+    private javax.swing.JButton btnAddVCD;
+    private javax.swing.JDialog jDialog1;
+    private javax.swing.JDialog jDialog2;
+    private javax.swing.JDialog jDialog3;
+    private javax.swing.JMenu jMenu1;
+    private javax.swing.JMenuItem jMenuItem1;
+    private javax.swing.JScrollPane jScrollPane1;
+    private javax.swing.JScrollPane jScrollPane2;
+    private javax.swing.JTable tableJenisFilm;
+    private javax.swing.JTable tableVcd;
     // End of variables declaration//GEN-END:variables
+
+    @Override
+    public void start() {
+        
+    }
+
+    @Override
+    public void restart() {
+        getDataTable();
+    }
+
+    @Override
+    public void finish() {
+        
+    }
 }

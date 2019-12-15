@@ -14,6 +14,6 @@ import java.util.List;
 public interface DatabaseInterface<T> {
     void onResult(List<T> list);
     void onSuccess();
-    void onError();
+    void onError(String message);
     void onProcess();
 }

@@ -21,6 +21,17 @@ public class VCD {
 
     private JenisFilm jenisFilm;
 
+    public VCD() {
+    }
+
+    public VCD(String kode, String nama, int harga, int Nilaidenda, JenisFilm jenisFilm) {
+        this.kode = kode;
+        this.nama = nama;
+        this.harga = harga;
+        this.Nilaidenda = Nilaidenda;
+        this.jenisFilm = jenisFilm;
+    }
+    
     public String getKode() {
         return kode;
     }

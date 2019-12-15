@@ -6,13 +6,7 @@
 package uas_oop_171080200234;
 
 import java.sql.SQLException;
-import java.util.List;
 import uas_oop_171080200234.database_service.DatabaseConnection;
-import uas_oop_171080200234.database_service.DatabaseFactory;
-import uas_oop_171080200234.database_service.DatabaseInterface;
-import uas_oop_171080200234.database_service.DatabaseConst;
-import uas_oop_171080200234.database_service.models.JenisFilm;
-import uas_oop_171080200234.database_service.repositories.RepositoryInterface;
 import uas_oop_171080200234.ui.MainApp;
 
 /**
@@ -20,55 +14,57 @@ import uas_oop_171080200234.ui.MainApp;
  * @author naufalnibros
  */
 public class Uas_oop_171080200234 {
-   
-    private static MainApp mainApp;
     
-    private static RepositoryInterface jenisFilm;
-
     public static void main(String[] args) throws SQLException {
         
-        DatabaseConnection.getInstance().getConnection();
-        
-//        new Uas_oop_171080200234().initDatabase();
-//        
-//        jenisFilm.create(new JenisFilm());
-        
-//        mainApp = new MainApp();
-//        mainApp.setVisible(true);
-//        mainApp.setOnListener(() -> {
-//            mainApp.setVisible(false);
-//            System.exit(0);
-//        });
-
+        DatabaseConnection.getInstance(() -> {
+            new MainApp().setVisible(true);
+        });
     }
     
-    void initDatabase(){
-        jenisFilm = DatabaseFactory.from(DatabaseConst.TABLE_JENIS_FILM).setListener(DATABASE_INTERFACE);
-    }
-    
-    private static final DatabaseInterface<JenisFilm> DATABASE_INTERFACE = new DatabaseInterface<JenisFilm>() {
+    private static void openJasper(){
         
-        @Override
-        public void onResult(List<JenisFilm> list) {
-            list.forEach((t) -> {
-                System.out.println("asdasd" + t.getKode());
-            });
-        }
-
-        @Override
-        public void onSuccess() {
-     
-        }
-
-        @Override
-        public void onError() {
-     
-        }
-
-        @Override
-        public void onProcess() {
-     
-        }
-    };
+//        try {
+//
+//            String report = JasperCompileManager.compileReportToFile(sourceFileName);
+//
+//            JasperPrint jasperPrint = JasperFillManager.fillReport(report, para, ds);
+//
+//            PrinterJob printerJob = PrinterJob.getPrinterJob();
+//
+//            PageFormat pageFormat = PrinterJob.getPrinterJob().defaultPage();
+//            printerJob.defaultPage(pageFormat);
+//
+//            int selectedService = 0;
+//
+//            AttributeSet attributeSet = new HashPrintServiceAttributeSet(new PrinterName(printerNameShort, null));
+//
+//            PrintService[] printService = PrintServiceLookup.lookupPrintServices(null, attributeSet);
+//
+//            try {
+//                printerJob.setPrintService(printService[selectedService]);
+//
+//            } catch (Exception e) {
+//
+//                System.out.println(e);
+//            }
+//            JRPrintServiceExporter exporter;
+//            PrintRequestAttributeSet printRequestAttributeSet = new HashPrintRequestAttributeSet();
+//            printRequestAttributeSet.add(MediaSizeName.NA_LETTER);
+//            printRequestAttributeSet.add(new Copies(1));
+//
+//            // these are deprecated
+//            exporter = new JRPrintServiceExporter();
+//            exporter.setParameter(JRExporterParameter.JASPER_PRINT, jasperPrint);
+//            exporter.setParameter(JRPrintServiceExporterParameter.PRINT_SERVICE, printService[selectedService]);
+//            exporter.setParameter(JRPrintServiceExporterParameter.PRINT_SERVICE_ATTRIBUTE_SET, printService[selectedService].getAttributes());
+//            exporter.setParameter(JRPrintServiceExporterParameter.PRINT_REQUEST_ATTRIBUTE_SET, printRequestAttributeSet);
+//            exporter.setParameter(JRPrintServiceExporterParameter.DISPLAY_PAGE_DIALOG, Boolean.FALSE);
+//            exporter.setParameter(JRPrintServiceExporterParameter.DISPLAY_PRINT_DIALOG, Boolean.FALSE);
+//            exporter.exportReport();
+//        } catch (JRException e) {
+//            System.out.println(e.g);
+//        }
+    }
     
 }
