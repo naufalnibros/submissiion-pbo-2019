@@ -18,7 +18,7 @@ import uas_oop_171080200234.ui.OnCallBackComponent;
  *
  * @author naufalnibros
  */
-public class JenisFilmDialogForm extends javax.swing.JFrame {
+public class JenisFilmDialogForm extends javax.swing.JDialog {
     
     private static RepositoryInterface repository;
     
@@ -53,6 +53,7 @@ public class JenisFilmDialogForm extends javax.swing.JFrame {
         
         @Override
         public void onResult(List<JenisFilm> list) {
+            
         }
 
         @Override

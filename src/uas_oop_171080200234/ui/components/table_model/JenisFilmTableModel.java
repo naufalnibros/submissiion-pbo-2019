@@ -19,11 +19,11 @@ public class JenisFilmTableModel extends AbstractTableModel {
     private List<JenisFilm> list = new ArrayList<>();
     
     private final String[] columnNames = new String[] {
-            "KODE", "KETERANGAN"
+            "No.", "Kode", "Keterangan"
     };
     
     private final Class[] columnClass = new Class[] {
-        String.class, String.class
+        Integer.class, String.class, String.class
     };    
 
     public JenisFilmTableModel(List<JenisFilm> list) {
@@ -54,13 +54,16 @@ public class JenisFilmTableModel extends AbstractTableModel {
     public Object getValueAt(int rowIndex, int columnIndex)
     {
         JenisFilm data = list.get(rowIndex);
-        
-        if(0 == columnIndex) {
-            return data.getKode();
-        } else if (1 == columnIndex) {
-            return data.getJenis();
+        switch (columnIndex) {
+            case 0:
+                return data.getNo();
+            case 1:
+                return data.getKode();
+            case 2:
+                return data.getJenis();
+            default:
+                break;
         }
-        
         return null;
     }
     

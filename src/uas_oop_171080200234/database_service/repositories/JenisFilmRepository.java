@@ -74,8 +74,11 @@ public class JenisFilmRepository implements RepositoryInterface<JenisFilm>{
             
             ResultSet resultSet = preparedStatement.executeQuery();
             
+            int iterator = 1;
+            
             while(resultSet.next()){
-                list.add(new JenisFilm(resultSet.getString("kd_jns"), resultSet.getString("ket_jns")));
+                list.add(new JenisFilm(iterator, resultSet.getString("kd_jns"), resultSet.getString("ket_jns")));
+                iterator++;
             }
                     
         } catch (SQLException ex) {
@@ -90,5 +93,36 @@ public class JenisFilmRepository implements RepositoryInterface<JenisFilm>{
     @Override
     public void setListener(DatabaseInterface databaseInterface) {
         this.databaseInterface = databaseInterface;
+    }
+
+    @Override
+    public List<JenisFilm> search(String query) {
+        List<JenisFilm> list = new ArrayList<>();
+        
+        String SQL = "SELECT * FROM jenis_film WHERE kd_jns LIKE ? OR ket_jns LIKE ? ORDER BY kd_jns DESC";
+        
+        try {
+            Connection connection = DatabaseConnection.getInstance().getConnection();
+            PreparedStatement preparedStatement = connection.prepareStatement(SQL, Statement.RETURN_GENERATED_KEYS);
+            
+            preparedStatement.setString(1, "%" + (query == null ? "" : query) + "%");
+            preparedStatement.setString(2, "%" + (query == null ? "" : query) + "%");
+            
+            ResultSet resultSet = preparedStatement.executeQuery();
+            
+            int iterator = 1;
+            
+            while(resultSet.next()){
+                list.add(new JenisFilm(iterator, resultSet.getString("kd_jns"), resultSet.getString("ket_jns")));
+                iterator++;
+            }
+                    
+        } catch (SQLException ex) {
+            if (databaseInterface != null) databaseInterface.onError( "Pencarian : " + ex.getMessage());
+        }
+        
+        if (databaseInterface != null) databaseInterface.onResult(list);
+        
+        return list;
     }
 }

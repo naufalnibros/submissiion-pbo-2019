@@ -18,6 +18,7 @@ public interface RepositoryInterface<T> {
     void create(T object);
     void update(T object);
     void delete(String id);
+    List<T> search(String query);
     T find();
     List<T> findAll();
 }

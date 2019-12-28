@@ -82,14 +82,18 @@ public class VCDRepository implements RepositoryInterface<VCD>{
             
             ResultSet resultSet = preparedStatement.executeQuery();
             
+            int iterator = 1;
+            
             while(resultSet.next()){
                 list.add(new VCD(
+                        iterator,
                         resultSet.getString("kd_vcd"), 
                         resultSet.getString("nm_vcd"), 
                         resultSet.getInt("hrg_sewa"),
                         resultSet.getInt("nil_denda"), 
                         new JenisFilm(resultSet.getString("kd_jns"), resultSet.getString("ket_jns"))
                 ));
+                iterator++;
             }
                     
         } catch (SQLException ex) {
@@ -104,6 +108,48 @@ public class VCDRepository implements RepositoryInterface<VCD>{
     @Override
     public void setListener(DatabaseInterface databaseInterface) {
         this.databaseInterface = databaseInterface;
+    }
+
+    @Override
+    public List<VCD> search(String query) {
+        List<VCD> list = new ArrayList<>();
+        String SQL = "SELECT * FROM vcd " +
+                     "LEFT JOIN jenis_film " +
+                     "ON jenis_film.kd_jns = vcd.kd_jns " +
+                     "WHERE vcd.kd_vcd LIKE ? OR vcd.kd_vcd LIKE ? OR jenis_film.kd_jns LIKE ? OR jenis_film.ket_jns LIKE ? " +
+                     "ORDER BY kd_vcd DESC;";
+        try {
+            Connection connection = DatabaseConnection.getInstance().getConnection();
+            PreparedStatement preparedStatement = connection.prepareStatement(SQL, Statement.RETURN_GENERATED_KEYS);
+            
+            preparedStatement.setString(1, "%" + (query == null ? "" : query) + "%");
+            preparedStatement.setString(2, "%" + (query == null ? "" : query) + "%");
+            preparedStatement.setString(3, "%" + (query == null ? "" : query) + "%");
+            preparedStatement.setString(4, "%" + (query == null ? "" : query) + "%");
+            
+            ResultSet resultSet = preparedStatement.executeQuery();
+            
+            int iterator = 1;
+            
+            while(resultSet.next()){
+                list.add(new VCD(
+                        iterator,
+                        resultSet.getString("kd_vcd"), 
+                        resultSet.getString("nm_vcd"), 
+                        resultSet.getInt("hrg_sewa"),
+                        resultSet.getInt("nil_denda"), 
+                        new JenisFilm(resultSet.getString("kd_jns"), resultSet.getString("ket_jns"))
+                ));
+                iterator++;
+            }
+                    
+        } catch (SQLException ex) {
+            if (databaseInterface != null) databaseInterface.onError(ex.getMessage());
+        }
+        
+        if (databaseInterface != null) databaseInterface.onResult(list);
+        
+        return list;
     }
     
 }

@@ -11,6 +11,8 @@ package uas_oop_171080200234.database_service.models;
  */
 public class VCD {
     
+    private int no;
+    
     private String kode;
     
     private String nama;
@@ -31,6 +33,17 @@ public class VCD {
         this.Nilaidenda = Nilaidenda;
         this.jenisFilm = jenisFilm;
     }
+
+    public VCD(int no, String kode, String nama, int harga, int Nilaidenda, JenisFilm jenisFilm) {
+        this.no = no;
+        this.kode = kode;
+        this.nama = nama;
+        this.harga = harga;
+        this.Nilaidenda = Nilaidenda;
+        this.jenisFilm = jenisFilm;
+    }
+    
+    
     
     public String getKode() {
         return kode;
@@ -71,6 +84,15 @@ public class VCD {
     public void setJenisFilm(JenisFilm jenisFilm) {
         this.jenisFilm = jenisFilm;
     }
+
+    public int getNo() {
+        return no;
+    }
+
+    public void setNo(int no) {
+        this.no = no;
+    }
+
     
     
 }

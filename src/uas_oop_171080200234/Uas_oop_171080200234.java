@@ -6,8 +6,8 @@
 package uas_oop_171080200234;
 
 import java.sql.SQLException;
-import uas_oop_171080200234.database_service.DatabaseConnection;
-import uas_oop_171080200234.ui.MainApp;
+import javax.swing.JFrame;
+import uas_oop_171080200234.ui.panel.MainPanel;
 
 /**
  *
@@ -17,9 +17,12 @@ public class Uas_oop_171080200234 {
     
     public static void main(String[] args) throws SQLException {
         
-        DatabaseConnection.getInstance(() -> {
-            new MainApp().setVisible(true);
-        });
+//        DatabaseConnection.getInstance(() -> {
+//            new MainApp().setVisible(true);
+//        });
+
+            new MainPanel().setVisible(true);
+
     }
     
     private static void openJasper(){

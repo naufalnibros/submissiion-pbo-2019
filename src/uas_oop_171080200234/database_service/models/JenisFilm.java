@@ -11,11 +11,19 @@ package uas_oop_171080200234.database_service.models;
  */
 public class JenisFilm {
     
+    private int no = 0;
+    
     private String kode;
     
     private String jenis;
 
     public JenisFilm(String kode, String jenis) {
+        this.kode = kode;
+        this.jenis = jenis;
+    }
+
+    public JenisFilm(int no, String kode, String jenis) {
+        this.no = no;
         this.kode = kode;
         this.jenis = jenis;
     }
@@ -42,7 +50,17 @@ public class JenisFilm {
 
     @Override
     public String toString() {
-        return jenis;
+        return jenis ;
     }
+
+    public int getNo() {
+        return no;
+    }
+
+    public void setNo(int no) {
+        this.no = no;
+    }
+    
+    
     
 }
