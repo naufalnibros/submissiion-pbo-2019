@@ -20,11 +20,11 @@ public class VCDTableModel extends AbstractTableModel {
     private List<VCD> list = new ArrayList<>();
     
     private final String[] columnNames = new String[] {
-            "KODE", "NAMA", "JENIS FILM", "HARGA SEWA", "NILAI DENDA"
+            "No.", "Kode", "Nama", "Jenis Film", "Harga Sewa", "Nilai Denda"
     };
     
     private final Class[] columnClass = new Class[] {
-        String.class, String.class, String.class, String.class, String.class
+        String.class, String.class, String.class, String.class, String.class, String.class
     };    
 
     public VCDTableModel(List<VCD> list) {
@@ -58,18 +58,21 @@ public class VCDTableModel extends AbstractTableModel {
         
         switch (columnIndex) {
             case 0 : {
-                return data.getKode();
+                return String.valueOf(data.getNo());
             }
             case 1 : {
-                return data.getNama();
+                return data.getKode();
             }
             case 2 : {
-                return data.getJenisFilm().getJenis();
+                return data.getNama();
             }
             case 3 : {
-                return FormatUtils.price(data.getHarga());
+                return data.getJenisFilm().getJenis();
             }
             case 4 : {
+                return FormatUtils.price(data.getHarga());
+            }
+            case 5 : {
                 return FormatUtils.price(data.getNilaidenda());
             }
         }

@@ -7,8 +7,10 @@ package uas_oop_171080200234.ui.panel;
 
 import java.awt.Dimension;
 import javax.swing.JInternalFrame;
+import uas_oop_171080200234.database_service.repositories.JenisFilmRepository;
 import uas_oop_171080200234.ui.components.jinternal_form.JenisFilmJInternalForm;
 import uas_oop_171080200234.ui.components.jinternal_form.VCDJInternalForm;
+import uas_oop_171080200234.utils.JasperUtils;
 
 /**
  *
@@ -48,11 +50,11 @@ public class MainPanel extends javax.swing.JFrame {
         dekstopPane = new javax.swing.JDesktopPane();
         menuBar = new javax.swing.JMenuBar();
         fileMenu = new javax.swing.JMenu();
-        openMenuItem = new javax.swing.JMenuItem();
-        saveMenuItem = new javax.swing.JMenuItem();
+        onMenuMasterJenis = new javax.swing.JMenuItem();
+        onMenuMasterVcd = new javax.swing.JMenuItem();
         editMenu = new javax.swing.JMenu();
-        cutMenuItem = new javax.swing.JMenuItem();
-        copyMenuItem = new javax.swing.JMenuItem();
+        onMenuReportJenis = new javax.swing.JMenuItem();
+        onMenuReportVcd = new javax.swing.JMenuItem();
 
         jMenuItem1.setText("jMenuItem1");
 
@@ -78,36 +80,41 @@ public class MainPanel extends javax.swing.JFrame {
         fileMenu.setMnemonic('f');
         fileMenu.setText("Data Master");
 
-        openMenuItem.setMnemonic('o');
-        openMenuItem.setText("Jenis Film");
-        openMenuItem.addActionListener(new java.awt.event.ActionListener() {
+        onMenuMasterJenis.setMnemonic('o');
+        onMenuMasterJenis.setText("Jenis Film");
+        onMenuMasterJenis.addActionListener(new java.awt.event.ActionListener() {
             public void actionPerformed(java.awt.event.ActionEvent evt) {
-                openMenuItemActionPerformed(evt);
+                onMenuMasterJenisActionPerformed(evt);
             }
         });
-        fileMenu.add(openMenuItem);
+        fileMenu.add(onMenuMasterJenis);
 
-        saveMenuItem.setMnemonic('s');
-        saveMenuItem.setText("VCD");
-        saveMenuItem.addActionListener(new java.awt.event.ActionListener() {
+        onMenuMasterVcd.setMnemonic('s');
+        onMenuMasterVcd.setText("VCD");
+        onMenuMasterVcd.addActionListener(new java.awt.event.ActionListener() {
             public void actionPerformed(java.awt.event.ActionEvent evt) {
-                saveMenuItemActionPerformed(evt);
+                onMenuMasterVcdActionPerformed(evt);
             }
         });
-        fileMenu.add(saveMenuItem);
+        fileMenu.add(onMenuMasterVcd);
 
         menuBar.add(fileMenu);
 
         editMenu.setMnemonic('e');
         editMenu.setText("Laporan");
 
-        cutMenuItem.setMnemonic('t');
-        cutMenuItem.setText("iReport Jenis Film");
-        editMenu.add(cutMenuItem);
+        onMenuReportJenis.setMnemonic('t');
+        onMenuReportJenis.setText("iReport Jenis Film");
+        onMenuReportJenis.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                onMenuReportJenisActionPerformed(evt);
+            }
+        });
+        editMenu.add(onMenuReportJenis);
 
-        copyMenuItem.setMnemonic('y');
-        copyMenuItem.setText("iReport VCD");
-        editMenu.add(copyMenuItem);
+        onMenuReportVcd.setMnemonic('y');
+        onMenuReportVcd.setText("iReport VCD");
+        editMenu.add(onMenuReportVcd);
 
         menuBar.add(editMenu);
 
@@ -127,13 +134,19 @@ public class MainPanel extends javax.swing.JFrame {
         pack();
     }// </editor-fold>//GEN-END:initComponents
 
-    private void openMenuItemActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_openMenuItemActionPerformed
+    private void onMenuMasterJenisActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_onMenuMasterJenisActionPerformed
         openForm(new JenisFilmJInternalForm());
-    }//GEN-LAST:event_openMenuItemActionPerformed
+    }//GEN-LAST:event_onMenuMasterJenisActionPerformed
 
-    private void saveMenuItemActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_saveMenuItemActionPerformed
+    private void onMenuMasterVcdActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_onMenuMasterVcdActionPerformed
         openForm(new VCDJInternalForm());
-    }//GEN-LAST:event_saveMenuItemActionPerformed
+    }//GEN-LAST:event_onMenuMasterVcdActionPerformed
+
+    private void onMenuReportJenisActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_onMenuReportJenisActionPerformed
+        JasperUtils
+                .set("Report Master Jenis Film", this)
+                .open(new JenisFilmRepository().getReport(), "Report/FileReport.jasper");
+    }//GEN-LAST:event_onMenuReportJenisActionPerformed
 
     /**
      * @param args the command line arguments
@@ -172,8 +185,6 @@ public class MainPanel extends javax.swing.JFrame {
     }
 
     // Variables declaration - do not modify//GEN-BEGIN:variables
-    private javax.swing.JMenuItem copyMenuItem;
-    private javax.swing.JMenuItem cutMenuItem;
     private javax.swing.JDesktopPane dekstopPane;
     private javax.swing.JMenu editMenu;
     private javax.swing.JMenu fileMenu;
@@ -182,8 +193,10 @@ public class MainPanel extends javax.swing.JFrame {
     private javax.swing.JMenuBar jMenuBar1;
     private javax.swing.JMenuItem jMenuItem1;
     private javax.swing.JMenuBar menuBar;
-    private javax.swing.JMenuItem openMenuItem;
-    private javax.swing.JMenuItem saveMenuItem;
+    private javax.swing.JMenuItem onMenuMasterJenis;
+    private javax.swing.JMenuItem onMenuMasterVcd;
+    private javax.swing.JMenuItem onMenuReportJenis;
+    private javax.swing.JMenuItem onMenuReportVcd;
     // End of variables declaration//GEN-END:variables
 
 }

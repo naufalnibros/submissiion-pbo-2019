@@ -128,32 +128,17 @@
       </Properties>
     </Component>
     <Component class="javax.swing.JTextField" name="txtFieldNama">
-      <Events>
-        <EventHandler event="actionPerformed" listener="java.awt.event.ActionListener" parameters="java.awt.event.ActionEvent" handler="txtFieldNamaActionPerformed"/>
-      </Events>
     </Component>
     <Component class="javax.swing.JTextField" name="txtFieldKode">
-      <Events>
-        <EventHandler event="actionPerformed" listener="java.awt.event.ActionListener" parameters="java.awt.event.ActionEvent" handler="txtFieldKodeActionPerformed"/>
-      </Events>
     </Component>
     <Component class="javax.swing.JComboBox" name="comboBoxJenisFilm">
-      <Events>
-        <EventHandler event="actionPerformed" listener="java.awt.event.ActionListener" parameters="java.awt.event.ActionEvent" handler="comboBoxJenisFilmActionPerformed"/>
-      </Events>
       <AuxValues>
         <AuxValue name="JavaCodeGenerator_TypeParameters" type="java.lang.String" value="&lt;JenisFilm&gt;"/>
       </AuxValues>
     </Component>
     <Component class="javax.swing.JTextField" name="txtFieldHargaSewa">
-      <Events>
-        <EventHandler event="actionPerformed" listener="java.awt.event.ActionListener" parameters="java.awt.event.ActionEvent" handler="txtFieldHargaSewaActionPerformed"/>
-      </Events>
     </Component>
     <Component class="javax.swing.JTextField" name="txtFieldNilaiDenda">
-      <Events>
-        <EventHandler event="actionPerformed" listener="java.awt.event.ActionListener" parameters="java.awt.event.ActionEvent" handler="txtFieldNilaiDendaActionPerformed"/>
-      </Events>
     </Component>
     <Component class="javax.swing.JTextField" name="edtPencarian">
     </Component>
@@ -189,6 +174,9 @@
       <Properties>
         <Property name="text" type="java.lang.String" value="SIMPAN"/>
       </Properties>
+      <Events>
+        <EventHandler event="actionPerformed" listener="java.awt.event.ActionListener" parameters="java.awt.event.ActionEvent" handler="btnSimpanActionPerformed"/>
+      </Events>
     </Component>
     <Component class="javax.swing.JButton" name="btnReset">
       <Properties>

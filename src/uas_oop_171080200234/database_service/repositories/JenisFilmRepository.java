@@ -125,4 +125,20 @@ public class JenisFilmRepository implements RepositoryInterface<JenisFilm>{
         
         return list;
     }
+
+    @Override
+    public ResultSet getReport() {        
+        String SQL = "SELECT * FROM jenis_film ORDER BY kd_jns DESC";
+        
+        try {
+            Connection connection = DatabaseConnection.getInstance().getConnection();
+            PreparedStatement preparedStatement = connection.prepareStatement(SQL, Statement.RETURN_GENERATED_KEYS);
+            
+            return preparedStatement.executeQuery();
+        } catch (SQLException ex) {
+            if (databaseInterface != null) databaseInterface.onError( "Result Set : " + ex.getMessage());
+        }
+        
+        return null;
+    }
 }

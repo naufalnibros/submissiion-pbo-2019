@@ -23,7 +23,7 @@ public class JenisFilmTableModel extends AbstractTableModel {
     };
     
     private final Class[] columnClass = new Class[] {
-        Integer.class, String.class, String.class
+        String.class, String.class, String.class
     };    
 
     public JenisFilmTableModel(List<JenisFilm> list) {
@@ -56,7 +56,7 @@ public class JenisFilmTableModel extends AbstractTableModel {
         JenisFilm data = list.get(rowIndex);
         switch (columnIndex) {
             case 0:
-                return data.getNo();
+                return String.valueOf(data.getNo());
             case 1:
                 return data.getKode();
             case 2:

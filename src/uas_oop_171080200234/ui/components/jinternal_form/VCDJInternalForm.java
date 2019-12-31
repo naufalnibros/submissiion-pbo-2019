@@ -5,15 +5,20 @@
  */
 package uas_oop_171080200234.ui.components.jinternal_form;
 
+import java.awt.event.KeyAdapter;
+import java.awt.event.KeyEvent;
 import java.util.List;
 import javax.swing.JOptionPane;
+import javax.swing.JTextField;
+import javax.swing.event.DocumentEvent;
+import javax.swing.event.DocumentListener;
 import uas_oop_171080200234.database_service.DatabaseConst;
 import uas_oop_171080200234.database_service.DatabaseFactory;
 import uas_oop_171080200234.database_service.DatabaseInterface;
 import uas_oop_171080200234.database_service.models.JenisFilm;
 import uas_oop_171080200234.database_service.models.VCD;
 import uas_oop_171080200234.database_service.repositories.RepositoryInterface;
-import uas_oop_171080200234.ui.components.dialog_form.VCDDialogForm;
+import uas_oop_171080200234.ui.components.table_model.VCDTableModel;
 import uas_oop_171080200234.utils.ComboBoxModelJenisFilm;
 
 /**
@@ -34,9 +39,17 @@ public class VCDJInternalForm extends javax.swing.JInternalFrame {
         
         initComponents();
         
+        setFormatNumber(txtFieldHargaSewa);
+        
+        setFormatNumber(txtFieldNilaiDenda);
+        
+        setEdtPencarian();
+        
         setRepositoryModel();
         
         setBoxModelJenisFilm(repositoryJenisFilm.findAll());
+        
+        repositoryVCD.findAll();
     }
     
     private void setRepositoryModel(){
@@ -66,7 +79,7 @@ public class VCDJInternalForm extends javax.swing.JInternalFrame {
 
         @Override
         public void onProcess() {
-     
+            
         }
     };
     
@@ -74,11 +87,13 @@ public class VCDJInternalForm extends javax.swing.JInternalFrame {
         
         @Override
         public void onResult(List<VCD> list) {
+            VCDTableModel tableModel = new VCDTableModel(list);
+            tableVcd.setModel(tableModel);
         }
 
         @Override
         public void onSuccess() {
-            JOptionPane.showMessageDialog(null, "Data Berhasil diinputkan", "Selamat!", JOptionPane.PLAIN_MESSAGE);
+            onSuccessSave();
         }
 
         @Override
@@ -107,6 +122,12 @@ public class VCDJInternalForm extends javax.swing.JInternalFrame {
             JOptionPane.showMessageDialog(null, e.getMessage(), "Terjadi Kesalahan", JOptionPane.PLAIN_MESSAGE);
             dispose();
         }
+    }
+    
+    private void onSuccessSave(){
+        JOptionPane.showMessageDialog(null, "Data Berhasil diinputkan", "Selamat!", JOptionPane.PLAIN_MESSAGE);
+        setResetField();
+        repositoryVCD.findAll();
     }
 
     /**
@@ -148,36 +169,6 @@ public class VCDJInternalForm extends javax.swing.JInternalFrame {
 
         jLabel6.setText("PENCARIAN :");
 
-        txtFieldNama.addActionListener(new java.awt.event.ActionListener() {
-            public void actionPerformed(java.awt.event.ActionEvent evt) {
-                txtFieldNamaActionPerformed(evt);
-            }
-        });
-
-        txtFieldKode.addActionListener(new java.awt.event.ActionListener() {
-            public void actionPerformed(java.awt.event.ActionEvent evt) {
-                txtFieldKodeActionPerformed(evt);
-            }
-        });
-
-        comboBoxJenisFilm.addActionListener(new java.awt.event.ActionListener() {
-            public void actionPerformed(java.awt.event.ActionEvent evt) {
-                comboBoxJenisFilmActionPerformed(evt);
-            }
-        });
-
-        txtFieldHargaSewa.addActionListener(new java.awt.event.ActionListener() {
-            public void actionPerformed(java.awt.event.ActionEvent evt) {
-                txtFieldHargaSewaActionPerformed(evt);
-            }
-        });
-
-        txtFieldNilaiDenda.addActionListener(new java.awt.event.ActionListener() {
-            public void actionPerformed(java.awt.event.ActionEvent evt) {
-                txtFieldNilaiDendaActionPerformed(evt);
-            }
-        });
-
         tableVcd.setBorder(javax.swing.BorderFactory.createBevelBorder(javax.swing.border.BevelBorder.RAISED));
         tableVcd.setModel(new javax.swing.table.DefaultTableModel(
             new Object [][] {
@@ -198,6 +189,11 @@ public class VCDJInternalForm extends javax.swing.JInternalFrame {
         jScrollPane2.setViewportView(tableVcd);
 
         btnSimpan.setText("SIMPAN");
+        btnSimpan.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                btnSimpanActionPerformed(evt);
+            }
+        });
 
         btnReset.setText("RESET");
         btnReset.addActionListener(new java.awt.event.ActionListener() {
@@ -279,30 +275,72 @@ public class VCDJInternalForm extends javax.swing.JInternalFrame {
         pack();
     }// </editor-fold>//GEN-END:initComponents
 
-    private void txtFieldNamaActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_txtFieldNamaActionPerformed
-        // TODO add your handling code here:
-    }//GEN-LAST:event_txtFieldNamaActionPerformed
-
-    private void txtFieldKodeActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_txtFieldKodeActionPerformed
-        // TODO add your handling code here:
-    }//GEN-LAST:event_txtFieldKodeActionPerformed
-
-    private void comboBoxJenisFilmActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_comboBoxJenisFilmActionPerformed
-
-    }//GEN-LAST:event_comboBoxJenisFilmActionPerformed
-
-    private void txtFieldHargaSewaActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_txtFieldHargaSewaActionPerformed
-        // TODO add your handling code here:
-    }//GEN-LAST:event_txtFieldHargaSewaActionPerformed
-
-    private void txtFieldNilaiDendaActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_txtFieldNilaiDendaActionPerformed
-        // TODO add your handling code here:
-    }//GEN-LAST:event_txtFieldNilaiDendaActionPerformed
-
     private void btnResetActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnResetActionPerformed
-        // TODO add your handling code here:
+        setResetField();
     }//GEN-LAST:event_btnResetActionPerformed
 
+    private void btnSimpanActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnSimpanActionPerformed
+        onActionSave();
+    }//GEN-LAST:event_btnSimpanActionPerformed
+
+    private void setResetField(){
+        txtFieldHargaSewa.setText(null);
+        txtFieldKode.setText(null);
+        txtFieldKode.setText(null);
+        txtFieldNama.setText(null);
+        txtFieldNilaiDenda.setText(null);
+    }
+    
+    private void onActionSave(){
+        try {
+            repositoryVCD.create(
+                new VCD(
+                        txtFieldKode.getText(), 
+                        txtFieldNama.getText(), 
+                        Integer.valueOf(txtFieldNilaiDenda.getText()),
+                        Integer.valueOf(txtFieldHargaSewa.getText()), 
+                        boxModelJenisFilm.getSelectedItem())
+            );
+        } catch (NumberFormatException e) {
+            JOptionPane.showMessageDialog(null, e.getMessage(), "Terjadi Kesalahan", JOptionPane.PLAIN_MESSAGE);
+        }
+    }
+    
+    private void setEdtPencarian(){
+        DocumentListener dl = new DocumentListener() {
+            @Override
+            public void insertUpdate(DocumentEvent de) {
+                repositoryVCD.search(edtPencarian.getText());
+            }
+
+            @Override
+            public void removeUpdate(DocumentEvent de) {
+                repositoryVCD.search(edtPencarian.getText());
+            }
+
+            @Override
+            public void changedUpdate(DocumentEvent de) {
+                repositoryVCD.search(edtPencarian.getText());
+            }
+        };
+        
+        edtPencarian.getDocument().addDocumentListener(dl);
+    }
+    
+    private void setFormatNumber(JTextField field){
+        field.addKeyListener(new KeyAdapter() {
+            @Override
+            public void keyPressed(KeyEvent ke) {
+                if (ke.getKeyChar() >= '0' && ke.getKeyChar() <= '9') {
+                   field.setEditable(true);
+                } else {
+                   JOptionPane.showMessageDialog(null, "Masukkan hanya bilangan numerik(1 - 9)", "Peringatan!", JOptionPane.PLAIN_MESSAGE);
+                   field.setText(null);
+                }
+            }
+            
+        });
+    }
 
     // Variables declaration - do not modify//GEN-BEGIN:variables
     private javax.swing.JButton btnReset;

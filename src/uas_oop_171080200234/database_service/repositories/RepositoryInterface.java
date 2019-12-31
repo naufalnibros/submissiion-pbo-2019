@@ -5,6 +5,7 @@
  */
 package uas_oop_171080200234.database_service.repositories;
 
+import java.sql.ResultSet;
 import java.util.List;
 import uas_oop_171080200234.database_service.DatabaseInterface;
 
@@ -21,4 +22,5 @@ public interface RepositoryInterface<T> {
     List<T> search(String query);
     T find();
     List<T> findAll();
+    ResultSet getReport();
 }

@@ -5,10 +5,10 @@
  */
 package uas_oop_171080200234.ui.components.jinternal_form;
 
-import java.awt.event.KeyAdapter;
-import java.awt.event.KeyEvent;
 import java.util.List;
 import javax.swing.JOptionPane;
+import javax.swing.event.DocumentEvent;
+import javax.swing.event.DocumentListener;
 import uas_oop_171080200234.database_service.DatabaseConst;
 import uas_oop_171080200234.database_service.DatabaseFactory;
 import uas_oop_171080200234.database_service.DatabaseInterface;
@@ -82,12 +82,24 @@ public class JenisFilmJInternalForm extends javax.swing.JInternalFrame {
     }
     
     private void setEdtPencarian(){
-        edtPencarian.addKeyListener(new KeyAdapter() {
+        DocumentListener dl = new DocumentListener() {
             @Override
-            public void keyTyped(KeyEvent ke) {
+            public void insertUpdate(DocumentEvent de) {
                 repository.search(edtPencarian.getText());
             }
-        });
+
+            @Override
+            public void removeUpdate(DocumentEvent de) {
+                repository.search(edtPencarian.getText());
+            }
+
+            @Override
+            public void changedUpdate(DocumentEvent de) {
+                repository.search(edtPencarian.getText());
+            }
+        };
+        
+        edtPencarian.getDocument().addDocumentListener(dl);
     }
 
     /**

@@ -116,8 +116,11 @@ public class VCDRepository implements RepositoryInterface<VCD>{
         String SQL = "SELECT * FROM vcd " +
                      "LEFT JOIN jenis_film " +
                      "ON jenis_film.kd_jns = vcd.kd_jns " +
-                     "WHERE vcd.kd_vcd LIKE ? OR vcd.kd_vcd LIKE ? OR jenis_film.kd_jns LIKE ? OR jenis_film.ket_jns LIKE ? " +
-                     "ORDER BY kd_vcd DESC;";
+                     "WHERE vcd.kd_vcd LIKE ? "
+                + "OR vcd.nm_vcd LIKE ? "
+                + "OR jenis_film.kd_jns LIKE ? "
+                + "OR jenis_film.ket_jns LIKE ? " +
+                     "ORDER BY kd_vcd DESC;";        
         try {
             Connection connection = DatabaseConnection.getInstance().getConnection();
             PreparedStatement preparedStatement = connection.prepareStatement(SQL, Statement.RETURN_GENERATED_KEYS);
@@ -150,6 +153,11 @@ public class VCDRepository implements RepositoryInterface<VCD>{
         if (databaseInterface != null) databaseInterface.onResult(list);
         
         return list;
+    }
+
+    @Override
+    public ResultSet getReport() {
+        throw new UnsupportedOperationException("Not supported yet."); //To change body of generated methods, choose Tools | Templates.
     }
     
 }
