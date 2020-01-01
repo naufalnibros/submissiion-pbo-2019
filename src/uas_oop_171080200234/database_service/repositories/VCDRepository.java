@@ -157,7 +157,21 @@ public class VCDRepository implements RepositoryInterface<VCD>{
 
     @Override
     public ResultSet getReport() {
-        throw new UnsupportedOperationException("Not supported yet."); //To change body of generated methods, choose Tools | Templates.
+        String SQL = "SELECT * FROM vcd " +
+                     "LEFT JOIN jenis_film " +
+                     "ON jenis_film.kd_jns = vcd.kd_jns " +
+                     "ORDER BY kd_vcd DESC;";
+        
+        try {
+            Connection connection = DatabaseConnection.getInstance().getConnection();
+            PreparedStatement preparedStatement = connection.prepareStatement(SQL, Statement.RETURN_GENERATED_KEYS);
+            
+            return preparedStatement.executeQuery();
+        } catch (SQLException ex) {
+            if (databaseInterface != null) databaseInterface.onError( "Result Set : " + ex.getMessage());
+        }
+        
+        return null;
     }
     
 }

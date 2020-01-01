@@ -1,16 +1,15 @@
 /*
  * To change this license header, choose License Headers in Project Properties.
  * To change this template file, choose Tools | Templates
- * and open the template in the editor.
+ * and jasper the template in the editor.
  */
 package uas_oop_171080200234.ui.panel;
 
-import java.awt.Dimension;
-import javax.swing.JInternalFrame;
 import uas_oop_171080200234.database_service.repositories.JenisFilmRepository;
+import uas_oop_171080200234.database_service.repositories.VCDRepository;
 import uas_oop_171080200234.ui.components.jinternal_form.JenisFilmJInternalForm;
 import uas_oop_171080200234.ui.components.jinternal_form.VCDJInternalForm;
-import uas_oop_171080200234.utils.JasperUtils;
+import uas_oop_171080200234.utils.OpenUtils;
 
 /**
  *
@@ -26,14 +25,6 @@ public class MainPanel extends javax.swing.JFrame {
         setExtendedState(MAXIMIZED_BOTH);
     }
     
-    private void openForm(JInternalFrame form){
-        Dimension desktopSize = dekstopPane.getSize();
-        Dimension jInternalFrameSize = form.getSize();
-        form.setLocation((desktopSize.width - jInternalFrameSize.width)/2, (desktopSize.height- jInternalFrameSize.height)/2);
-        dekstopPane.add(form);        
-        form.setVisible(true);
-    }
-
     /**
      * This method is called from within the constructor to initialize the form.
      * WARNING: Do NOT modify this code. The content of this method is always
@@ -114,6 +105,11 @@ public class MainPanel extends javax.swing.JFrame {
 
         onMenuReportVcd.setMnemonic('y');
         onMenuReportVcd.setText("iReport VCD");
+        onMenuReportVcd.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                onMenuReportVcdActionPerformed(evt);
+            }
+        });
         editMenu.add(onMenuReportVcd);
 
         menuBar.add(editMenu);
@@ -135,18 +131,20 @@ public class MainPanel extends javax.swing.JFrame {
     }// </editor-fold>//GEN-END:initComponents
 
     private void onMenuMasterJenisActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_onMenuMasterJenisActionPerformed
-        openForm(new JenisFilmJInternalForm());
+        OpenUtils.frame(new JenisFilmJInternalForm(), dekstopPane);
     }//GEN-LAST:event_onMenuMasterJenisActionPerformed
 
     private void onMenuMasterVcdActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_onMenuMasterVcdActionPerformed
-        openForm(new VCDJInternalForm());
+        OpenUtils.frame(new VCDJInternalForm(), dekstopPane);
     }//GEN-LAST:event_onMenuMasterVcdActionPerformed
 
     private void onMenuReportJenisActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_onMenuReportJenisActionPerformed
-        JasperUtils
-                .set("Report Master Jenis Film", this)
-                .open(new JenisFilmRepository().getReport(), "Report/FileReport.jasper");
+        OpenUtils.set("Report Master Jenis Film", this, dekstopPane).jasper(new JenisFilmRepository().getReport(), "./Report/JenisFilm.jasper");
     }//GEN-LAST:event_onMenuReportJenisActionPerformed
+
+    private void onMenuReportVcdActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_onMenuReportVcdActionPerformed
+        OpenUtils.set("Report Master Jenis Film", this, dekstopPane).jasper(new VCDRepository().getReport(), "./Report/VCD.jasper");
+    }//GEN-LAST:event_onMenuReportVcdActionPerformed
 
     /**
      * @param args the command line arguments

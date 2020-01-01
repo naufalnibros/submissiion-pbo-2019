@@ -60,7 +60,7 @@ public class JenisFilmJInternalForm extends javax.swing.JInternalFrame {
 
         @Override
         public void onError(String message) {
-            JOptionPane.showMessageDialog(null, message, "Terjadi Kesalahan", JOptionPane.PLAIN_MESSAGE);
+            JOptionPane.showMessageDialog(getContentPane().getParent().getParent(), message, "Terjadi Kesalahan", JOptionPane.PLAIN_MESSAGE);
         }
 
         @Override
@@ -70,7 +70,7 @@ public class JenisFilmJInternalForm extends javax.swing.JInternalFrame {
     };
     
     private void onSuccessSave(){
-        JOptionPane.showMessageDialog(null, "Data Berhasil diinputkan", "Selamat!", JOptionPane.PLAIN_MESSAGE);
+        JOptionPane.showMessageDialog(getContentPane().getParent().getParent(), "Data Berhasil diinputkan", "Selamat!", JOptionPane.PLAIN_MESSAGE);
         edtKode.setText(null);
         edtKeterangan.setText(null);
         repository.findAll();
